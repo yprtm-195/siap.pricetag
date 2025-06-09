@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SIAP Pricetag</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            height: 100%;
+            width: 100%;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            /* Mencegah highlight saat touch */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            touch-action: pan-y;
+        }
+
+        .loading-container {
+            text-align: center;
+            width: 100%;
+            padding: 20px;
+            /* Menggunakan viewport height untuk penyesuaian ukuran */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-logo {
+            /* Ukuran logo disesuaikan dengan viewport width */
+            width: 60vw;
+            height: auto;
+            max-width: 200px;
+            animation: pulse 2s infinite;
+            /* Mencegah drag image */
+            -webkit-user-drag: none;
+            user-drag: none;
+        }
+
+        .loading-spinner {
+            /* Ukuran spinner disesuaikan dengan viewport width */
+            width: 15vw;
+            height: 15vw;
+            max-width: 50px;
+            max-height: 50px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            margin: 20px auto;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-text {
+            color: #333;
+            /* Ukuran font disesuaikan dengan viewport width */
+            font-size: 4vw;
+            margin-top: 20px;
+            animation: fadeInOut 1.5s infinite;
+        }
+
+        .main-content {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
+            padding: 10px;
+        }
+
+        .categories-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 5px;
+            padding-bottom: 60px;
+            width: 100%;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .category-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        .category-header {
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-thumbnail {
+            width: 100%;
+            height: 80px;
+            background: #f8f8f8;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .category-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 8px;
+            background: white;
+        }
+
+        .category-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0 2px;
+            text-align: center;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .category-name::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background: #4CAF50;
+            border-radius: 50%;
+        }
+
+        .category-arrow {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+            opacity: 0.6;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            padding: 4px;
+        }
+
+        .category-arrow.expanded {
+            transform: rotate(180deg);
+            opacity: 1;
+        }
+
+        .category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: #fafafa;
+            position: relative;
+        }
+
+        .category-content.expanded {
+            max-height: 2000px;
+            background: #fff;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 15px;
+            padding-top: 50px;
+            background: #fafafa;
+            border-top: 1px solid #eee;
+        }
+
+        .product-item {
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.03);
+            cursor: pointer;
+        }
+
+        .product-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+
+        .product-item.selected {
+            border: 2px solid #4CAF50;
+            background: #f8fff8;
+        }
+
+        .product-item.selected::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(76, 175, 80, 0.05);
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .product-item.selected .product-name {
+            color: #4CAF50;
+        }
+
+        .product-item.selected .product-barcode {
+            background: #e8f5e9;
+            color: #388E3C;
+        }
+
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 100%;
+            margin-bottom: 8px;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #f8f8f8;
+            transition: all 0.3s ease;
+        }
+
+        .product-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background-color: #fff;
+            padding: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-item:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.3;
+            height: 34px;
+        }
+
+        .product-barcode {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-family: monospace;
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .add-button {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #4CAF50;
+            border: 2px solid #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transform: scale(1);
+            pointer-events: none;
+        }
+
+        .product-item.selected .add-button {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .select-all-button {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 28px;
+            height: 28px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            z-index: 2;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .select-all-button svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .category-content.expanded .select-all-button {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .select-all-button:active {
+            transform: scale(0.9);
+        }
+
+        .select-all-button.selected {
+            background: #f44336;
+        }
+
+        .add-button:active {
+            transform: scale(0.9);
+        }
+
+        .add-button.selected {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+            animation: pulse 0.3s ease;
+        }
+
+        .selected-products {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+        }
+
+        .selected-count {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .clear-selection {
+            padding: 8px 15px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .clear-selection svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .clear-selection:active {
+            transform: scale(0.95);
+            background: #d32f2f;
+        }
+
+        .view-barcode {
+            padding: 8px 15px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .view-barcode svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .view-barcode:active {
+            transform: scale(0.95);
+            background: #388E3C;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.3;
+            }
+        }
+
+        /* Media query untuk memastikan tampilan portrait */
+        @media screen and (orientation: landscape) {
+            .loading-container {
+                transform: rotate(-90deg);
+                transform-origin: left top;
+                width: 100vh;
+                height: 100vw;
+                position: absolute;
+                top: 100%;
+                left: 0;
+            }
+        }
+
+        /* Mencegah zoom pada input di mobile */
+        input, textarea {
+            font-size: 16px;
+        }
+
+        /* Menambahkan efek hover untuk desktop */
+        @media (hover: hover) {
+            .add-button:hover {
+                transform: scale(1.1);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            }
+        }
+
+        .barcode-container {
+            display: none;
+            width: 100%;
+            height: 100%;
+            background: white;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 2000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-y;
+        }
+
+        .barcode-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100%;
+            gap: 20px;
+            padding: 20px 0;
+            touch-action: pan-y;
+        }
+
+        .barcode-image {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+        }
+
+        .barcode-info {
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 300px;
+            position: relative;
+        }
+
+        .barcode-info::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 4px;
+            background: #4CAF50;
+            border-radius: 2px;
+        }
+
+        .barcode-info::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 4px;
+            background: #4CAF50;
+            border-radius: 2px;
+        }
+
+        .barcode-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .barcode-number {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .product-image-barcode {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            border-radius: 12px;
+            background: #f8f8f8;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .product-image-barcode::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 2px solid #4CAF50;
+            border-radius: 14px;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .product-image-barcode::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 16px;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .product-image-barcode:hover {
+            transform: scale(1.02);
+        }
+
+        .product-image-barcode:hover::before {
+            opacity: 1;
+            border-color: #388E3C;
+        }
+
+        .progress-container {
+            width: 100%;
+            max-width: 300px;
+            margin: 15px 0;
+            padding: 0 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #4CAF50;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .barcode-navigation {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 20px;
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+        }
+
+        .nav-button {
+            padding: 12px 25px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-button svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .nav-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .nav-button:active {
+            transform: scale(0.95);
+        }
+
+        .close-barcode {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .close-barcode svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .close-barcode:active {
+            transform: scale(0.95);
+        }
+
+        .barcode-counter {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .category-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            padding: 20px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-y;
+        }
+
+        .category-popup-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 600px;
+            margin: 20px auto;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            touch-action: pan-y;
+        }
+
+        .popup-header {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
+            border-radius: 12px 12px 0 0;
+            z-index: 1;
+        }
+
+        .popup-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .popup-select-all {
+            position: absolute;
+            top: 12px;
+            right: 50px;
+            padding: 6px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .popup-select-all svg {
+            width: 12px;
+            height: 12px;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .close-popup {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .close-popup svg {
+            width: 16px;
+            height: 16px;
+            stroke: #666;
+            stroke-width: 2;
+        }
+
+        .popup-products {
+            padding: 12px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            flex: 1;
+            min-height: 0;
+            touch-action: pan-y;
+        }
+
+        .product-item {
+            background: white;
+            border-radius: 6px;
+            padding: 6px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.03);
+            cursor: pointer;
+        }
+
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 100%;
+            margin-bottom: 4px;
+            overflow: hidden;
+            border-radius: 4px;
+            background: #f8f8f8;
+            transition: all 0.3s ease;
+        }
+
+        .product-name {
+            font-size: 10px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.2;
+            height: 24px;
+        }
+
+        .product-barcode {
+            font-size: 9px;
+            color: #666;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-family: monospace;
+            background: #f5f5f5;
+            padding: 1px 3px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .add-button {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            transform: scale(1);
+            pointer-events: none;
+        }
+
+        .add-button svg {
+            width: 12px;
+            height: 12px;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        @media (max-width: 480px) {
+            .categories-container {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+                padding: 8px;
+            }
+
+            .popup-products {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+                padding: 8px;
+            }
+
+            .category-popup {
+                padding: 8px;
+            }
+
+            .category-popup-content {
+                margin: 8px auto;
+                max-height: 95vh;
+            }
+
+            .barcode-content {
+                padding: 8px 0;
+            }
+
+            .category-thumbnail {
+                height: 70px;
+            }
+
+            .category-name {
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .categories-container {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+                padding: 6px;
+            }
+
+            .popup-products {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+                padding: 6px;
+            }
+
+            .category-thumbnail {
+                height: 60px;
+            }
+
+            .category-name {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <img src="https://siap.cimory.com/siap/assets/production/images/logo_turbagi.png" alt="Turbagi Logo" class="loading-logo">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">SIAP Pricetag V1.0 | mod by YPratama</div>
+    </div>
+
+    <div class="main-content">
+        <div class="categories-container">
+            <!-- Card kategori akan ditambahkan secara dinamis -->
+        </div>
+    </div>
+
+    <div class="selected-products">
+        <div class="selected-count">0 Produk Dipilih</div>
+    </div>
+
+    <div class="barcode-container">
+        <button class="close-barcode" onclick="closeBarcodeView()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </button>
+        <div class="barcode-content">
+            <div class="barcode-info">
+                <img class="product-image-barcode" src="" alt="Product Image">
+                <div class="barcode-name"></div>
+                <div class="barcode-number"></div>
+            </div>
+            <img class="barcode-image" src="" alt="Barcode">
+        </div>
+        <div class="barcode-navigation">
+            <button class="nav-button" onclick="previousBarcode()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+                Sebelumnya
+            </button>
+            <button class="nav-button" onclick="nextBarcode()">
+                Selanjutnya
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="progress-text"></div>
+        </div>
+    </div>
+
+    <div class="category-popup">
+        <div class="category-popup-content">
+            <div class="popup-header">
+                <div class="popup-title"></div>
+                <button class="popup-select-all">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M12 5v14M5 12h14"/>
+                    </svg>
+                    Pilih Semua
+                </button>
+                <button class="close-popup">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="popup-products"></div>
+        </div>
+    </div>
+
+    <script>
+        // Data dalam format CSV
+        const categoriesCSV = `
+Kategori,Produk,Barcode,Gambar
+Yogurt Drink 240 ml,Blueberry 240 ml,8993200661657,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Reguler-250ml-01.jpg
+Yogurt Drink 240 ml,Strawberry 240 ml,8993200661305,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Reguler-250ml-02.jpg
+Yogurt Drink 240 ml,Mixed Fruit 240 ml,8993200661350,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Reguler-250ml-06.jpg
+Yogurt Drink 240 ml,Lychee 240 ml,8993200661299,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Reguler-250ml-03.jpg
+Yogurt Drink 240 ml,Mixed Berry 240 ml,8993200663057,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Reguler-250ml-05.jpg
+Yogurt Drink 240 ml,Original 240 ml,8993200663064,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Reguler-250ml-07.jpg
+Yogurt Drink 240 ml,LF Strawberry Mango 240 ml,8993200665006,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Lowfat-250ml-05.jpg
+Yogurt Drink 240 ml,LF Banana 240 ml,8993200664993,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Lowfat-250ml-03.jpg
+Squeeze 120 gr,Original 120 gr,8993200666935,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-Squeeze-140-g-03.jpg
+Squeeze 120 gr,Strawberry 120 gr,8993200666942,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-Squeeze-140-g-01.jpg
+Squeeze 120 gr,Blueberry 120 gr,8993200666959,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-Squeeze-140-g-02.jpg
+Squeeze 120 gr,Mango Sticky Rice 120 gr,8993200661343,https://c.alfagift.id/product/1/1_A7741890002167_20240920102547063_base.jpg
+Squeeze 120 gr,Purple Taro 120 gr,8993200668304,https://cimory.com/uploads/products/variant_claim_id_yyCiJD1631068524.png
+Squeeze 120 gr,Brown Sugar 120 gr,8993200668335,https://c.alfagift.id/product/1/1_A7748960002167_20240920102914703_base.jpg
+Squeeze Bites 120 gr,Strawberry 120 gr,899320069400,https://c.alfagift.id/product/1/1_A8166180002167_20240729112116757_base.jpg
+Squeeze Bites 120 gr,Blueberry 120 gr,8993200669417,https://c.alfagift.id/product/1/1_A8166190002167_20240729112107465_base.jpg
+Squeeze Bites 120 gr,Yuzu 120 gr,8993200669240,https://c.alfagift.id/product/1/1_A8166200002167_20240729112202921_base.jpg
+Squeeze Bites 120 gr,Strawberry Lychee 120 gr,8993200669264,https://c.alfagift.id/product/1/1_A8166210002167_20240729112212806_base.jpg
+Squeeze Bites 120 gr,Berry Blemd 120 gr,8993200669271,https://c.alfagift.id/product/1/1_A8269630002167_20250326140553498_base.jpg
+Squeeze Bites 120 gr,Strawberry Manggo 120 gr,8993200669301,https://c.alfagift.id/product/1/1_A8269620002167_20250326140550195_base.jpg
+Stick Yogurt 40 gr,Strawberry 40 gr,8993200668915,https://c.alfagift.id/product/1/1_A8006350002167_20230922143547780_base.jpg
+Stick Yogurt 40 gr,Blueberry 40 gr,8993200668922,https://c.alfagift.id/product/1/1_A8006340002167_20230922143601946_base.jpg
+Stick Yogurt 40 gr,Original 40 gr,8993200668908,https://c.alfagift.id/product/1/1_A8130210002167_20240515095655362_base.jpg
+Stick Yogurt 40 gr,Mango Sticky Rice 40 gr,8993200669363,https://c.alfagift.id/product/1/1_A8130200002167_20240515094931491_base.jpg
+Stick Yogurt 40 gr,Brown Sugar 40 gr,8993200669462,https://c.alfagift.id/product/1/1_A8212140002167_20241025144858561_base.jpg
+Eatmilk 80 gr,Chocolate 80 gr,8993200669561,https://c.alfagift.id/product/1/1_A8279130002167_20250508164840255_base.jpg
+Eatmilk 80 gr,Marie Biscuits 80 gr,8993200669622,https://c.alfagift.id/product/1/1_A8279140002167_20250508164850278_base.jpg
+Eatmilk 80 gr,Chocolate Hazelnut 80 gr,8993200669592,https://c.alfagift.id/product/1/1_A8279120002167_20250508164830616_base.jpg
+Kanzler Singles Sosis 60 gr,Singles Keju 60 gr,8993200346318,https://cimory.com/uploads/products/variant_claim_id_9oWOvV1704246353.jpg
+Kanzler Singles Sosis 60 gr,Singles Original 60 gr,8993200346319,https://cimory.com/uploads/products/variant_claim_id_mVfetA1704246621.jpg
+Kanzler Singles Sosis 60 gr,Singles Mini 60 gr,8993200347315,https://cimory.com/uploads/products/meat_0027_KS-New-Packaging-Mini.jpg
+Kanzler Singles Sosis 60 gr,Singles Hot 60 gr,8993200345717,https://cimory.com/uploads/products/variant_claim_id_pRF1MO1704246501.jpg
+Kanzler Singles Sosis 60 gr,Singles Gochujang 60 gr,8993200668243,https://cimory.com/uploads/products/variant_claim_id_AvXrnk1704245879.jpg
+Kanzler Singles Bakso 55 gr,Bakso Original 55 gr,8993200668496,https://cimory.com/uploads/products/variant_claim_id_XjrEoN1704246302.jpg
+Kanzler Singles Bakso 55 gr,Bakso Keju 55 gr,8993200668502,https://cimory.com/uploads/products/variant_claim_id_WLFqEW1704246268.jpg
+Kanzler Singles Bakso 55 gr,Bakso Hot 55 gr,8993200668984,https://cimory.com/uploads/products/variant_claim_id_0hZtVH1704247446.jpg
+Kanzler Singles Bakso 55 gr,Bakso Gochujang 55 gr,8993200000005,https://c.alfagift.id/product/1/1_A8248640002167_20250122163637397_base.jpg
+Mini Yogurt 4x65 ml,Blueberry 4x65 ml,8993200664061,https://c.alfagift.id/product/1/1_A6880780001089_20250609095045752_base.jpg
+Mini Yogurt 4x65 ml,Strawberry 4x65 ml,8993200664054,https://c.alfagift.id/product/1/1_A6880770001089_20250609095035175_base.jpg
+Milk 250 ml,Chocolate 250 ml,8993200666133,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-250ml-02.jpg
+Milk 250 ml,Bebas Laktosa 250 ml,8993200666157,https://cimory.com/uploads/products/variant_claim_id_V6sClv1701335628.jpg
+Milk 250 ml,Hazelnut 250 ml,8993200666805,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-250ml-09.jpg
+Milk 250 ml,Chocomalt 250 ml,8993200666898,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-250ml-11.jpg
+Milk 250 ml,Almond 250 ml,8993200666836,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-250ml-12.jpg
+Milk 250 ml,Cashew 250 ml,8993200666867,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-250ml-10.jpg
+Milk 250 ml,Marie Biscuits 250 ml,8993200666928,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-250ml-13.jpg
+Milk 250 ml,Strawberry 250 ml,8993200666218,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-250ml-03.jpg
+Milk 250 ml,Tiramisu 250 ml,8993200667246,https://c.alfagift.id/product/1/1_A7806670002167_20220905132638209_base.jpg
+Milk 250 ml,Salted Caramel 250 ml,8993200667215,https://cimory.com/uploads/products/variant_claim_id_Yc692r1701336911.jpg
+Milk 250 ml,Chocomint 250 ml,8993200668342,https://cimory.com/uploads/products/variant_claim_id_pUIazJ1701334693.jpg
+Milk 250 ml,Peanut Butter 250 ml,8993200667185,https://cimory.com/uploads/products/variant_claim_id_faxBEE1701334288.jpg
+Milk 250 ml,Matcha 250 ml,8993200666201,https://c.alfagift.id/product/1/1_A8121880002167_20240405134230448_base.jpg
+Milk 125 ml,Chocolate 125 ml,8993200666263,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-125ml-01.jpg
+Milk 125 ml,Strawberry 125 ml,8993200666348,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-125ml-02.jpg
+Milk 750 ml,Almond 750 ml,8993200667659,https://c.alfagift.id/product/1/1_A7942710002167_20250507140226800_base.jpg
+Milk 750 ml,Chocolate 750 ml,8993200667727,https://c.alfagift.id/product/1/1_A8279380002167_20250509134510212_base.jpg
+
+`;
+
+        // Fungsi untuk mengkonversi CSV ke format yang dibutuhkan
+        function parseCSV(csv) {
+            const lines = csv.trim().split('\n');
+            const headers = lines[0].split(',');
+            const data = {};
+            
+            // Mulai dari baris kedua (setelah header)
+            for (let i = 1; i < lines.length; i++) {
+                const [kategori, produk, barcode, gambar] = lines[i].split(',');
+                
+                if (!data[kategori]) {
+                    data[kategori] = [];
+                }
+                
+                data[kategori].push([produk, barcode, gambar]);
+            }
+            
+            // Konversi ke format array yang dibutuhkan
+            return Object.entries(data);
+        }
+
+        // Konversi CSV ke format yang dibutuhkan
+        const categories = parseCSV(categoriesCSV);
+
+        // Fungsi untuk menambah data dari CSV
+        function addFromCSV(csvData) {
+            const newData = parseCSV(csvData);
+            newData.forEach(([category, products]) => {
+                const existingCategory = categories.find(cat => cat[0] === category);
+                if (existingCategory) {
+                    // Tambah produk ke kategori yang sudah ada
+                    products.forEach(product => {
+                        if (!existingCategory[1].some(p => p[1] === product[1])) {
+                            existingCategory[1].push(product);
+                        }
+                    });
+                } else {
+                    // Tambah kategori baru
+                    categories.push([category, products]);
+                }
+            });
+            displayCategories(); // Refresh tampilan
+        }
+
+        // Fungsi untuk mengekspor data ke CSV
+        function exportToCSV() {
+            let csv = 'Kategori,Produk,Barcode,Gambar\n';
+            categories.forEach(([category, products]) => {
+                products.forEach(([product, barcode, image]) => {
+                    csv += `${category},${product},${barcode},${image}\n`;
+                });
+            });
+            return csv;
+        }
+
+        // Fungsi untuk menyimpan data ke file
+        function saveToFile() {
+            const csv = exportToCSV();
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'products.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Fungsi untuk membaca file CSV
+        function readCSVFile(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const csv = e.target.result;
+                addFromCSV(csv);
+            };
+            reader.readAsText(file);
+        }
+
+        // Menyimpan produk yang dipilih
+        let selectedProducts = new Set();
+
+        // Fungsi untuk menyimpan data ke localStorage
+        function saveSelectedProducts() {
+            localStorage.setItem('selectedProducts', JSON.stringify(Array.from(selectedProducts)));
+        }
+
+        // Fungsi untuk memulihkan data dari localStorage
+        function loadSelectedProducts() {
+            const savedProducts = localStorage.getItem('selectedProducts');
+            if (savedProducts) {
+                selectedProducts = new Set(JSON.parse(savedProducts));
+                // Update tampilan tombol
+                selectedProducts.forEach(barcode => {
+                    const button = document.querySelector(`.add-button[onclick="toggleProduct('${barcode}')"]`);
+                    if (button) {
+                        button.classList.add('selected');
+                        button.textContent = '×';
+                    }
+                });
+                updateSelectedCount();
+            }
+        }
+
+        // Fungsi untuk menambah kategori baru
+        function addCategory(categoryName, products) {
+            categories.push([categoryName, products]);
+            displayCategories(); // Refresh tampilan
+        }
+
+        // Fungsi untuk menambah produk ke kategori
+        function addProductToCategory(categoryName, productName, barcode, imageUrl) {
+            const categoryIndex = categories.findIndex(cat => cat[0] === categoryName);
+            if (categoryIndex !== -1) {
+                categories[categoryIndex][1].push([productName, barcode, imageUrl]);
+                displayCategories(); // Refresh tampilan
+            }
+        }
+
+        // Contoh penggunaan:
+        /*
+        // Menambah kategori baru
+        addCategory("Susu 1L", [
+            ["Coklat 1L", "8993200661234", "https://example.com/coklat.jpg"],
+            ["Strawberry 1L", "8993200661235", "https://example.com/strawberry.jpg"]
+        ]);
+
+        // Menambah produk ke kategori yang sudah ada
+        addProductToCategory("Yogurt Drink 240 ml", 
+            "Strawberry 240 ml", 
+            "8993200661658", 
+            "https://example.com/strawberry.jpg"
+        );
+        */
+
+        // Modifikasi fungsi createCategoryCard untuk format baru
+        function createCategoryCard(category) {
+            const [categoryName, products] = category;
+            const firstProduct = products[0];
+            return `
+                <div class="category-card">
+                    <div class="category-header" onclick="showCategoryPopup('${categoryName}')">
+                        <div class="category-thumbnail">
+                            <img src="${firstProduct[2]}" alt="${categoryName}">
+                        </div>
+                        <div class="category-name">${categoryName}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Modifikasi fungsi showCategoryPopup untuk format baru
+        function showCategoryPopup(categoryName) {
+            const category = categories.find(cat => cat[0] === categoryName);
+            if (!category) return;
+
+            const popup = document.querySelector('.category-popup');
+            const popupTitle = popup.querySelector('.popup-title');
+            const popupProducts = popup.querySelector('.popup-products');
+            const selectAllButton = popup.querySelector('.popup-select-all');
+
+            popupTitle.textContent = categoryName;
+            popupProducts.innerHTML = category[1].map(product => `
+                <div class="product-item ${selectedProducts.has(product[1]) ? 'selected' : ''}" 
+                     onclick="toggleProduct('${product[1]}', event)">
+                    <button class="add-button">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 5v14M5 12h14"/>
+                        </svg>
+                    </button>
+                    <div class="product-image-container">
+                        <img src="${product[2]}" alt="${product[0]}" class="product-image">
+                    </div>
+                    <div class="product-name">${product[0]}</div>
+                    <div class="product-barcode">${product[1]}</div>
+                </div>
+            `).join('');
+
+            // Update tombol select all
+            const allSelected = category[1].every(product => selectedProducts.has(product[1]));
+            selectAllButton.classList.toggle('selected', allSelected);
+            selectAllButton.innerHTML = allSelected ? 
+                `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M6 18L18 6M6 6l12 12"/>
+                </svg>Hapus Semua` :
+                `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>Pilih Semua`;
+
+            popup.style.display = 'block';
+
+            // Tambahkan event listener untuk menutup popup ketika mengklik di luar
+            popup.addEventListener('click', function(e) {
+                if (e.target === popup) {
+                    closeCategoryPopup();
+                }
+            });
+        }
+
+        function closeCategoryPopup() {
+            const popup = document.querySelector('.category-popup');
+            popup.style.display = 'none';
+        }
+
+        // Tambahkan event listener untuk tombol close
+        document.querySelector('.close-popup').addEventListener('click', closeCategoryPopup);
+
+        // Tambahkan event listener untuk escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCategoryPopup();
+            }
+        });
+
+        function toggleProduct(barcode, event) {
+            const productItem = event.currentTarget;
+            const button = productItem.querySelector('.add-button');
+            
+            if (selectedProducts.has(barcode)) {
+                selectedProducts.delete(barcode);
+                productItem.classList.remove('selected');
+                button.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>`;
+            } else {
+                selectedProducts.add(barcode);
+                productItem.classList.add('selected');
+                button.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M6 18L18 6M6 6l12 12"/>
+                </svg>`;
+            }
+            
+            // Update tombol select all
+            const categoryName = document.querySelector('.popup-title').textContent;
+            const category = categories.find(cat => cat[0] === categoryName);
+            const allSelected = category[1].every(product => selectedProducts.has(product[1]));
+            const selectAllButton = document.querySelector('.popup-select-all');
+            selectAllButton.classList.toggle('selected', allSelected);
+            selectAllButton.innerHTML = allSelected ? 
+                `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M6 18L18 6M6 6l12 12"/>
+                </svg>Hapus Semua` :
+                `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>Pilih Semua`;
+            
+            updateSelectedCount();
+            saveSelectedProducts();
+        }
+
+        // Fungsi untuk update jumlah produk yang dipilih
+        function updateSelectedCount() {
+            const countElement = document.querySelector('.selected-count');
+            const selectedProductsDiv = document.querySelector('.selected-products');
+            
+            if (selectedProducts.size > 0) {
+                countElement.innerHTML = `
+                    <span>${selectedProducts.size} Produk Dipilih</span>
+                    <div class="button-group">
+                        <button class="clear-selection" onclick="clearAllSelection()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                            </svg>
+                            Hapus Semua
+                        </button>
+                        <button class="view-barcode" onclick="showBarcodeView()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M3 7h2v10H3V7zm4 0h2v10H7V7zm4 0h2v10h-2V7zm4 0h2v10h-2V7zm4 0h2v10h-2V7z"/>
+                            </svg>
+                            Lihat Barcode
+                        </button>
+                    </div>
+                `;
+                selectedProductsDiv.style.display = 'block';
+            } else {
+                selectedProductsDiv.style.display = 'none';
+            }
+        }
+
+        function clearAllSelection() {
+            selectedProducts.clear();
+            
+            document.querySelectorAll('.add-button').forEach(button => {
+                button.classList.remove('selected');
+                button.textContent = '+';
+            });
+            
+            document.querySelectorAll('.select-all-button').forEach(button => {
+                button.classList.remove('selected');
+                button.textContent = '+';
+            });
+            
+            updateSelectedCount();
+            saveSelectedCount(); // Simpan setelah menghapus semua
+        }
+
+        // Fungsi untuk menampilkan kategori
+        function displayCategories() {
+            const container = document.querySelector('.categories-container');
+            container.innerHTML = categories.map(category => createCategoryCard(category)).join('');
+        }
+
+        // Mencegah refresh saat pull-to-refresh
+        let touchStartY = 0;
+        let touchEndY = 0;
+        
+        document.addEventListener('touchstart', function(e) {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: false });
+
+        document.addEventListener('touchmove', function(e) {
+            touchEndY = e.touches[0].clientY;
+            
+            // Jika user mencoba pull-to-refresh
+            if (touchStartY < touchEndY && window.scrollY === 0) {
+                e.preventDefault();
+            }
+            
+            // Mencegah zoom
+            if (e.scale !== 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // Mencegah refresh saat swipe down
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+
+        // Mencegah refresh saat double tap
+        let lastTap = 0;
+        document.addEventListener('touchend', function(e) {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            if (tapLength < 500 && tapLength > 0) {
+                e.preventDefault();
+            }
+            lastTap = currentTime;
+        });
+
+        // Mencegah refresh saat tekan lama
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Simulasi loading
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loading-container').style.display = 'none';
+                document.querySelector('.main-content').style.display = 'block';
+                displayCategories();
+                loadSelectedProducts(); // Load data yang tersimpan
+            }, 3000); // Loading akan berlangsung selama 3 detik
+        });
+
+        // Mencegah rotasi ke landscape
+        screen.orientation.lock('portrait').catch(function(error) {
+            console.log("Orientation lock failed: " + error);
+        });
+
+        // Mencegah refresh saat tombol back
+        window.addEventListener('popstate', function(e) {
+            e.preventDefault();
+            history.pushState(null, null, window.location.href);
+        });
+
+        // Menambahkan state ke history saat pertama kali load
+        history.pushState(null, null, window.location.href);
+
+        // Simpan data saat halaman akan ditutup
+        window.addEventListener('beforeunload', function() {
+            saveSelectedProducts();
+        });
+
+        let currentBarcodeIndex = 0;
+        let selectedProductsArray = [];
+
+        function showBarcodeView() {
+            if (selectedProducts.size === 0) return;
+            
+            selectedProductsArray = Array.from(selectedProducts);
+            currentBarcodeIndex = 0;
+            updateBarcodeView();
+            document.querySelector('.barcode-container').style.display = 'block';
+            document.querySelector('.main-content').style.display = 'none';
+        }
+
+        function closeBarcodeView() {
+            document.querySelector('.barcode-container').style.display = 'none';
+            document.querySelector('.main-content').style.display = 'block';
+        }
+
+        function updateBarcodeView() {
+            const barcode = selectedProductsArray[currentBarcodeIndex];
+            const product = findProductByBarcode(barcode);
+            
+            if (product) {
+                document.querySelector('.barcode-name').textContent = product.name;
+                document.querySelector('.barcode-number').textContent = product.barcode;
+                document.querySelector('.barcode-image').src = `https://barcodeapi.org/api/code128/${product.barcode}`;
+                document.querySelector('.product-image-barcode').src = product.image;
+                
+                // Update progress bar
+                const progress = ((currentBarcodeIndex + 1) / selectedProductsArray.length) * 100;
+                document.querySelector('.progress-fill').style.width = `${progress}%`;
+                document.querySelector('.progress-text').textContent = 
+                    `${currentBarcodeIndex + 1} dari ${selectedProductsArray.length} produk`;
+                
+                // Update status tombol navigasi
+                document.querySelector('.nav-button:first-child').disabled = currentBarcodeIndex === 0;
+                document.querySelector('.nav-button:last-child').disabled = currentBarcodeIndex === selectedProductsArray.length - 1;
+            }
+        }
+
+        function findProductByBarcode(barcode) {
+            for (const category of categories) {
+                const product = category[1].find(p => p[1] === barcode);
+                if (product) {
+                    return {
+                        name: product[0],
+                        barcode: product[1],
+                        image: product[2]
+                    };
+                }
+            }
+            return null;
+        }
+
+        function nextBarcode() {
+            if (currentBarcodeIndex < selectedProductsArray.length - 1) {
+                currentBarcodeIndex++;
+                updateBarcodeView();
+            }
+        }
+
+        function previousBarcode() {
+            if (currentBarcodeIndex > 0) {
+                currentBarcodeIndex--;
+                updateBarcodeView();
+            }
+        }
+
+        function toggleSelectAllPopup(event) {
+            const button = event.target.closest('.popup-select-all');
+            const isSelected = button.classList.contains('selected');
+            const categoryName = document.querySelector('.popup-title').textContent;
+            const category = categories.find(cat => cat[0] === categoryName);
+            
+            category[1].forEach(product => {
+                const productItem = document.querySelector(`.product-item[onclick*="${product[1]}"]`);
+                if (productItem) {
+                    if (!isSelected) {
+                        // Pilih semua produk
+                        if (!selectedProducts.has(product[1])) {
+                            selectedProducts.add(product[1]);
+                            productItem.classList.add('selected');
+                            productItem.querySelector('.add-button').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M6 18L18 6M6 6l12 12"/>
+                            </svg>`;
+                        }
+                    } else {
+                        // Hapus semua produk
+                        if (selectedProducts.has(product[1])) {
+                            selectedProducts.delete(product[1]);
+                            productItem.classList.remove('selected');
+                            productItem.querySelector('.add-button').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M12 5v14M5 12h14"/>
+                            </svg>`;
+                        }
+                    }
+                }
+            });
+            
+            button.classList.toggle('selected');
+            button.innerHTML = isSelected ? 
+                `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>Pilih Semua` :
+                `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M6 18L18 6M6 6l12 12"/>
+                </svg>Hapus Semua`;
+            
+            updateSelectedCount();
+            saveSelectedProducts();
+        }
+
+        document.querySelector('.popup-select-all').addEventListener('click', toggleSelectAllPopup);
+
+        function clearAllSelection() {
+            selectedProducts.clear();
+            
+            // Reset semua produk di popup
+            document.querySelectorAll('.product-item').forEach(item => {
+                item.classList.remove('selected');
+                item.querySelector('.add-button').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>`;
+            });
+            
+            // Reset tombol select all
+            const selectAllButton = document.querySelector('.popup-select-all');
+            if (selectAllButton) {
+                selectAllButton.classList.remove('selected');
+                selectAllButton.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>Pilih Semua`;
+            }
+            
+            updateSelectedCount();
+            saveSelectedProducts();
+        }
+
+        // Mencegah tombol kembali pada Android
+        let isFirstLoad = true;
+        window.addEventListener('load', function() {
+            if (isFirstLoad) {
+                history.pushState(null, null, window.location.href);
+                isFirstLoad = false;
+            }
+        });
+
+        window.addEventListener('popstate', function(event) {
+            // Mencegah navigasi kembali
+            history.pushState(null, null, window.location.href);
+            
+            // Tampilkan konfirmasi jika user mencoba keluar
+            if (document.querySelector('.barcode-container').style.display === 'block') {
+                if (confirm('Apakah Anda yakin ingin keluar dari tampilan barcode?')) {
+                    closeBarcodeView();
+                }
+            } else if (document.querySelector('.category-popup').style.display === 'block') {
+                if (confirm('Apakah Anda yakin ingin menutup popup?')) {
+                    closeCategoryPopup();
+                }
+            }
+        });
+
+        // Tambahkan event listener untuk visibility change
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                // Pastikan state history tetap ada
+                history.pushState(null, null, window.location.href);
+            }
+        });
+
+        // Tambahkan event listener untuk beforeunload
+        window.addEventListener('beforeunload', function(e) {
+            // Simpan data sebelum unload
+            saveSelectedProducts();
+            
+            // Tampilkan konfirmasi jika ada produk yang dipilih
+            if (selectedProducts.size > 0) {
+                e.preventDefault();
+                e.returnValue = '';
+                return '';
+            }
+        });
+    </script>
+</body>
+</html>
