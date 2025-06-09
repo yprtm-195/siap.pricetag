@@ -30,20 +30,15 @@
             width: 100%;
             background-color: #f5f5f5;
             font-family: Arial, sans-serif;
-            /* Mencegah highlight saat touch */
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             -khtml-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overflow: hidden;
-            touch-action: pan-y;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         .loading-container {
@@ -163,7 +158,7 @@
         .version-text {
             position: relative;
             text-align: right;
-            padding: 5px 15px; /* Mengurangi padding top dan bottom */
+            padding: 5px 15px;
             color: #666;
             font-size: 12px;
             z-index: 1000;
@@ -171,7 +166,7 @@
             border-radius: 0;
             box-shadow: none;
             animation: blink 3s ease-in-out infinite;
-            margin-bottom: 5px; /* Mengurangi margin bottom */
+            margin-bottom: 5px;
             width: 100%;
         }
 
@@ -183,12 +178,10 @@
 
         .main-content {
             display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overflow-y: scroll;
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             padding: 0;
         }
@@ -199,14 +192,15 @@
             z-index: 100;
             background: #f5f5f5;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding-top: 0; /* Menghapus padding top agar menempel */
+            padding-top: 0;
+            width: 100%;
         }
 
         /* Tambahkan style untuk search container */
         .search-container {
             position: relative;
             background: transparent;
-            padding: 0 15px 10px 15px; /* Mengurangi padding bottom */
+            padding: 0 15px 10px 15px;
             margin-bottom: 0;
             box-shadow: none;
             margin-top: 0;
@@ -222,7 +216,7 @@
             background: white;
             transition: all 0.3s ease;
             position: relative;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Menambah shadow */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .search-box:focus {
@@ -703,35 +697,6 @@
         }
 
         /* Media query untuk memastikan tampilan portrait */
-        @media screen and (orientation: landscape) {
-            .loading-container {
-                transform: rotate(-90deg);
-                transform-origin: left top;
-                width: 100vh;
-                height: 100vw;
-                position: absolute;
-                top: 100%;
-                left: 0;
-            }
-
-            .loading-logo {
-                width: 30vh;
-                max-width: 200px;
-            }
-
-            .loading-spinner {
-                width: 8vh;
-                height: 8vh;
-                max-width: 50px;
-                max-height: 50px;
-            }
-
-            .loading-text {
-                font-size: 14px;
-            }
-        }
-
-        /* Hapus style portrait yang lama */
         @media screen and (orientation: portrait) {
             .loading-container {
                 transform: none;
@@ -760,19 +725,6 @@
 
             .loading-text {
                 font-size: 16px;
-            }
-        }
-
-        /* Hapus style body landscape yang lama */
-        @media screen and (orientation: landscape) {
-            body {
-                transform: rotate(-90deg);
-                transform-origin: left top;
-                width: 100vh;
-                height: 100vw;
-                position: absolute;
-                top: 100%;
-                left: 0;
             }
         }
 
@@ -1288,7 +1240,7 @@
 
         .category-thumbnail {
             width: 100%;
-            height: 70px; /* Menyesuaikan tinggi thumbnail */
+            height: 70px;
             background: #f8f8f8;
             border-radius: 4px;
             overflow: hidden;
@@ -1296,7 +1248,7 @@
         }
 
         .category-name {
-            font-size: 10px; /* Menyesuaikan ukuran font nama kategori */
+            font-size: 10px;
             font-weight: 600;
             color: #333;
             display: flex;
@@ -1342,6 +1294,155 @@
             }
             .category-name {
                 font-size: 8px;
+            }
+        }
+
+        /* Responsive styles */
+        @media screen and (min-width: 768px) {
+            .categories-container {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+                padding: 20px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .category-card {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .search-container {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 0 20px 20px 20px;
+            }
+
+            .search-box {
+                font-size: 16px;
+                padding: 15px 25px;
+                padding-left: 45px;
+            }
+
+            .search-icon {
+                left: 30px;
+                width: 20px;
+                height: 20px;
+            }
+
+            .version-text {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+        }
+
+        @media screen and (min-width: 1024px) {
+            .categories-container {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 25px;
+                padding: 25px;
+            }
+
+            .category-card {
+                max-width: 250px;
+            }
+
+            .search-container {
+                max-width: 800px;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .categories-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .category-card {
+                max-width: none;
+            }
+
+            .search-container {
+                padding: 0 10px 10px 10px;
+            }
+
+            .search-box {
+                font-size: 14px;
+                padding: 10px 15px;
+                padding-left: 35px;
+            }
+
+            .search-icon {
+                left: 20px;
+                width: 16px;
+                height: 16px;
+            }
+
+            .version-text {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading screen responsive */
+        @media screen and (min-width: 768px) {
+            .loading-logo {
+                width: 40vw;
+                max-width: 300px;
+            }
+
+            .loading-spinner {
+                width: 10vw;
+                height: 10vw;
+                max-width: 60px;
+                max-height: 60px;
+            }
+
+            .loading-text {
+                font-size: 18px;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .loading-logo {
+                width: 60vw;
+                max-width: 200px;
+            }
+
+            .loading-spinner {
+                width: 15vw;
+                height: 15vw;
+                max-width: 50px;
+                max-height: 50px;
+            }
+
+            .loading-text {
+                font-size: 14px;
             }
         }
     </style>
@@ -1938,9 +2039,9 @@ Milk 750 ml,Chocolate 750 ml,8993200667727,https://c.alfagift.id/product/1/1_A82
         });
 
         // Mencegah rotasi ke landscape
-        screen.orientation.lock('portrait').catch(function(error) {
-            console.log("Orientation lock failed: " + error);
-        });
+        // screen.orientation.lock('portrait').catch(function(error) {
+        //     console.log("Orientation lock failed: " + error);
+        // });
 
         // Mencegah refresh saat tombol back
         window.addEventListener('popstate', function(e) {
