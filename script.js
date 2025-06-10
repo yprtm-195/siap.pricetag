@@ -543,28 +543,66 @@ window.addEventListener('click', (event) => {
 });
 
 // Fungsi untuk mencari produk
-function searchProducts(query) {
-    query = query.toLowerCase();
+function searchProducts(keyword) {
+    keyword = keyword.toLowerCase().trim();
     const results = [];
     
+    // Jika keyword kosong, return array kosong
+    if (!keyword) return results;
+    
+    // Iterasi melalui semua kategori
     for (const category in products) {
-        products[category].forEach(product => {
-            if (product.name.toLowerCase().includes(query) || 
-                product.id.toLowerCase().includes(query)) {
-                results.push({
-                    ...product,
-                    category: category
-                });
-            }
+        // Cari produk dalam kategori
+        const categoryProducts = products[category];
+        const matchedProducts = categoryProducts.filter(product => {
+            const productName = product.name.toLowerCase();
+            const productId = product.id.toLowerCase();
+            const categoryName = category.toLowerCase();
+            
+            // Pencarian yang lebih ketat
+            // 1. Exact match untuk nama produk
+            if (productName === keyword) return true;
+            
+            // 2. Exact match untuk barcode
+            if (productId === keyword) return true;
+            
+            // 3. Exact match untuk kategori
+            if (categoryName === keyword) return true;
+            
+            // 4. Match kata per kata yang lebih ketat
+            const nameWords = productName.split(' ');
+            const categoryWords = categoryName.split(' ');
+            const keywordWords = keyword.split(' ');
+            
+            // Cek setiap kata kunci
+            return keywordWords.every(keyword => {
+                // Cek apakah ada kata dalam nama produk yang dimulai dengan keyword
+                const nameMatch = nameWords.some(word => word.startsWith(keyword));
+                // Cek apakah ada kata dalam kategori yang dimulai dengan keyword
+                const categoryMatch = categoryWords.some(word => word.startsWith(keyword));
+                // Cek apakah barcode mengandung keyword
+                const barcodeMatch = productId.includes(keyword);
+                
+                return nameMatch || categoryMatch || barcodeMatch;
+            });
+        });
+
+        // Tambahkan produk yang cocok ke hasil
+        matchedProducts.forEach(product => {
+            results.push({
+                ...product,
+                category: category
+            });
         });
     }
     
     return results;
 }
 
-// Modifikasi fungsi displaySearchResults untuk menggunakan cache
+// Modifikasi fungsi displaySearchResults
 async function displaySearchResults(results) {
     const searchResultsDiv = document.getElementById('search-results');
+    const searchInput = document.getElementById('search-input');
     searchResultsDiv.innerHTML = '';
     
     if (results.length === 0) {
@@ -573,16 +611,67 @@ async function displaySearchResults(results) {
         return;
     }
     
-    for (const product of results) {
+    // Batasi jumlah hasil yang ditampilkan
+    const maxResults = 10;
+    const limitedResults = results.slice(0, maxResults);
+    
+    // Urutkan hasil berdasarkan relevansi
+    limitedResults.sort((a, b) => {
+        const aName = a.name.toLowerCase();
+        const bName = b.name.toLowerCase();
+        const keyword = searchInput.value.toLowerCase().trim();
+        const keywordWords = keyword.split(' ');
+        
+        // Fungsi untuk menghitung skor relevansi
+        const getRelevanceScore = (text) => {
+            let score = 0;
+            
+            // Exact match mendapat skor tertinggi
+            if (text === keyword) return 100;
+            
+            // Hitung jumlah kata yang cocok
+            const words = text.split(' ');
+            keywordWords.forEach(keyword => {
+                if (words.some(word => word.startsWith(keyword))) {
+                    score += 10;
+                }
+            });
+            
+            // Bonus untuk kata yang dimulai dengan keyword
+            if (text.startsWith(keyword)) {
+                score += 5;
+            }
+            
+            return score;
+        };
+        
+        const aScore = getRelevanceScore(aName);
+        const bScore = getRelevanceScore(bName);
+        
+        // Urutkan berdasarkan skor
+        if (aScore !== bScore) {
+            return bScore - aScore;
+        }
+        
+        // Jika skor sama, urutkan berdasarkan panjang nama
+        return aName.length - bName.length;
+    });
+    
+    for (const product of limitedResults) {
         const cachedImageUrl = await cacheImage(product.image);
         const resultItem = document.createElement('div');
         resultItem.classList.add('search-result-item');
+        
+        // Highlight kata kunci dalam hasil pencarian
+        const highlightedName = highlightKeyword(product.name, searchInput.value);
+        const highlightedCategory = highlightKeyword(product.category, searchInput.value);
+        
         resultItem.innerHTML = `
             <img src="${cachedImageUrl}" alt="${product.name}">
             <div class="search-result-info">
-                <h4>${product.name}</h4>
+                <h4>${highlightedName}</h4>
                 <p>${product.id}</p>
-                <div class="search-result-category">${product.category}</div>
+                <div class="search-result-category">${highlightedCategory}</div>
             </div>
         `;
         
@@ -594,34 +683,65 @@ async function displaySearchResults(results) {
                 saveSelectedProducts();
             }
             
-            document.getElementById('search-results').classList.remove('active');
-            document.getElementById('search-input').value = '';
+            // Kosongkan searchbar dan sembunyikan hasil pencarian
+            searchInput.value = '';
+            searchResultsDiv.classList.remove('active');
+            searchResultsDiv.innerHTML = '';
         });
         
         searchResultsDiv.appendChild(resultItem);
     }
     
+    // Tampilkan jumlah hasil yang lebih banyak jika ada
+    if (results.length > maxResults) {
+        const moreResults = document.createElement('div');
+        moreResults.classList.add('search-result-item', 'more-results');
+        moreResults.innerHTML = `<div class="search-result-info">+ ${results.length - maxResults} hasil lainnya</div>`;
+        searchResultsDiv.appendChild(moreResults);
+    }
+    
     searchResultsDiv.classList.add('active');
 }
 
-// Event listener untuk input pencarian
+// Fungsi untuk highlight kata kunci
+function highlightKeyword(text, keyword) {
+    if (!keyword) return text;
+    
+    const regex = new RegExp(`(${keyword})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
+}
+
+// Event listener untuk input pencarian dengan debounce yang lebih cepat
+let searchTimeout;
 document.getElementById('search-input').addEventListener('input', (e) => {
     const query = e.target.value.trim();
-    if (query.length > 0) {
-        const results = searchProducts(query);
-        displaySearchResults(results);
-    } else {
-        document.getElementById('search-results').classList.remove('active');
-    }
+    const searchResultsDiv = document.getElementById('search-results');
+    
+    // Clear previous timeout
+    clearTimeout(searchTimeout);
+    
+    // Set new timeout dengan delay yang lebih pendek
+    searchTimeout = setTimeout(() => {
+        if (query.length > 0) {
+            const results = searchProducts(query);
+            displaySearchResults(results);
+        } else {
+            searchResultsDiv.classList.remove('active');
+            searchResultsDiv.innerHTML = '';
+        }
+    }, 150); // Delay 150ms untuk respons yang lebih cepat
 });
 
 // Tutup hasil pencarian ketika mengklik di luar
 document.addEventListener('click', (e) => {
     const searchContainer = document.querySelector('.search-container');
     const searchResults = document.getElementById('search-results');
+    const searchInput = document.getElementById('search-input');
     
     if (!searchContainer.contains(e.target)) {
         searchResults.classList.remove('active');
+        searchResults.innerHTML = '';
+        searchInput.value = '';
     }
 });
 
