@@ -315,6 +315,8 @@ async function displayProducts(category) {
     }
     addSelectProductListeners();
     productModal.style.display = 'block';
+    // Tambahkan state ke history
+    history.pushState(null, '', window.location.href);
 }
 
 // Fungsi untuk menambahkan event listener ke checkbox produk
@@ -456,8 +458,8 @@ async function showBarcode() {
     try {
         JsBarcode("#barcode-image", product.id, {
             format: "CODE128",
-            width: 2,
-            height: 100,
+            width: 2.5,
+            height: 120,
             displayValue: true,
             fontSize: 20,
             margin: 10
@@ -475,6 +477,8 @@ async function showBarcode() {
     document.getElementById('next-barcode').disabled = currentBarcodeIndex === totalProducts - 1;
     
     barcodeModal.style.display = 'block';
+    // Tambahkan state ke history
+    history.pushState(null, '', window.location.href);
 }
 
 // Event listener untuk tombol navigasi barcode
@@ -658,8 +662,34 @@ function hideAddressBar() {
     }
 }
 
+// Fungsi untuk menangani tombol back di mobile
+function handleBackButton() {
+    // Cek apakah perangkat mobile
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // Tambahkan event listener untuk popstate
+        window.addEventListener('popstate', function(e) {
+            // Cek apakah modal produk atau barcode sedang terbuka
+            if (productModal.style.display === 'block') {
+                e.preventDefault();
+                productModal.style.display = 'none';
+                // Tambahkan state baru ke history
+                history.pushState(null, '', window.location.href);
+            } else if (barcodeModal.style.display === 'block') {
+                e.preventDefault();
+                barcodeModal.style.display = 'none';
+                // Tambahkan state baru ke history
+                history.pushState(null, '', window.location.href);
+            }
+        });
+
+        // Tambahkan state awal ke history
+        history.pushState(null, '', window.location.href);
+    }
+}
+
 // Inisialisasi aplikasi
 displayCategories();
 loadSelectedProducts();
 preventAccidentalRefresh();
 hideAddressBar(); // Tambahkan inisialisasi hide address bar
+handleBackButton(); // Tambahkan inisialisasi handle back button
