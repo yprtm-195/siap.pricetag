@@ -621,6 +621,13 @@ document.addEventListener('click', (e) => {
     }
 });
 
+// Event listener untuk search input
+document.getElementById('search-input').addEventListener('click', function(e) {
+    if (this.value) {
+        this.setSelectionRange(0, this.value.length);
+    }
+});
+
 // Fungsi untuk menyembunyikan address bar pada mobile
 function hideAddressBar() {
     // Cek apakah perangkat mobile
