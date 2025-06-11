@@ -36,11 +36,11 @@ Kanzler Singles Bakso 55 gr,Bakso Original 55 gr,899320066849,https://cimory.com
 Kanzler Singles Bakso 55 gr,Bakso Keju 55 gr,899320066850,https://cimory.com/uploads/products/variant_claim_id_WLFqEW1704246268.jpg
 Kanzler Singles Bakso 55 gr,Bakso Hot 55 gr,899320066898,https://cimory.com/uploads/products/variant_claim_id_0hZtVH1704247446.jpg
 Kanzler Singles Bakso 55 gr,Bakso Gochujang 55 gr,899320000000,https://c.alfagift.id/product/1/1_A8248640002167_20250122163637397_base.jpg
-Kanzler Nugget 450 gr,Chicken Nugget Original 450 gr,899320066438,https://cimory.com/uploads/products/variant_claim_id_ysx5bt1704247772.jpg
-Kanzler Nugget 450 gr,Crispy Chicken Nugget 450 gr,899320066439,https://cimory.com/uploads/products/variant_claim_id_fOzKTa1704247715.jpg
-Kanzler Nugget 450 gr,Crispy Chicken Stick 450 gr,899320066807,https://cimory.com/uploads/products/variant_claim_id_3FUWM41704248035.jpg
-Kanzler Nugget 450 gr,Chicken Nugget Spicy 450 gr,899320066913,https://c.alfagift.id/product/1/1_A8175020002167_20240814134841794_base.jpg
-Kanzler Sosis 250 gr,Beef Cocktail 250 gr,899320066777,https://cimory.com/uploads/products/-Cocktail-Series---EN---FA-SKU-icon_CS6_Rev-Aug-21-14.jpg
+Kanzler Frozen 450 gr,Chicken Nugget Original 450 gr,899320066438,https://cimory.com/uploads/products/variant_claim_id_ysx5bt1704247772.jpg
+Kanzler Frozen 450 gr,Crispy Chicken Nugget 450 gr,899320066439,https://cimory.com/uploads/products/variant_claim_id_fOzKTa1704247715.jpg
+Kanzler Frozen 450 gr,Crispy Chicken Stick 450 gr,899320066807,https://cimory.com/uploads/products/variant_claim_id_3FUWM41704248035.jpg
+Kanzler Frozen 450 gr,Chicken Nugget Spicy 450 gr,899320066913,https://c.alfagift.id/product/1/1_A8175020002167_20240814134841794_base.jpg
+Kanzler Frozen 450 gr,Beef Cocktail 250 gr,899320066777,https://c.alfagift.id/product/1/1_A7768630002167_20220517110751999_base.jpg
 Mini Yogurt 4x65 ml,Blueberry 4x65 ml,899320066406,https://c.alfagift.id/product/1/1_A6880780001089_20250609095045752_base.jpg
 Mini Yogurt 4x65 ml,Strawberry 4x65 ml,899320066405,https://c.alfagift.id/product/1/1_A6880770001089_20250609095035175_base.jpg
 Milk 250 ml,Chocolate 250 ml,899320066613,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-250ml-02.jpg
