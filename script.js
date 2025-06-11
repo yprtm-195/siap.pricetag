@@ -457,12 +457,11 @@ async function showBarcode() {
     
     try {
         JsBarcode("#barcode-image", product.id, {
-            format: "CODE128",
-            width: 2.5,
-            height: 120,
-            displayValue: true,
-            fontSize: 20,
-            margin: 10
+            format: "EAN13",
+    lineColor: "#000",
+    width: 2,
+    height: 100,
+    displayValue: true
         });
     } catch (e) {
         console.error("Error generating barcode:", e);
