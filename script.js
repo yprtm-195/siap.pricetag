@@ -1,65 +1,64 @@
 const csvData = `Kategori,Produk,Barcode,Gambar
-Yogurt Drink 240 ml,Blueberry 240 ml,899320066165,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Reguler-250ml-01.jpg
-Yogurt Drink 240 ml,Strawberry 240 ml,899320066130,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Reguler-250ml-02.jpg
-Yogurt Drink 240 ml,Mixed Fruit 240 ml,899320066135,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Reguler-250ml-06.jpg
-Yogurt Drink 240 ml,Lychee 240 ml,899320066129,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Reguler-250ml-03.jpg
-Yogurt Drink 240 ml,Mixed Berry 240 ml,899320066305,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Reguler-250ml-05.jpg
-Yogurt Drink 240 ml,Original 240 ml,899320066306,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Reguler-250ml-07.jpg
-Yogurt Drink 240 ml,LF Strawberry Mango 240 ml,899320066500,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Lowfat-250ml-05.jpg
-Yogurt Drink 240 ml,LF Banana 240 ml,899320066499,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-CYD-Lowfat-250ml-03.jpg
-Squeeze 120 gr,Original 120 gr,899320066693,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-Squeeze-140-g-03.jpg
-Squeeze 120 gr,Strawberry 120 gr,899320066694,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-Squeeze-140-g-01.jpg
-Squeeze 120 gr,Blueberry 120 gr,899320066695,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-Squeeze-140-g-02.jpg
-Squeeze 120 gr,Mango Sticky Rice 120 gr,899320066134,https://c.alfagift.id/product/1/1_A7741890002167_20240920102547063_base.jpg
-Squeeze 120 gr,Purple Taro 120 gr,899320066830,https://cimory.com/uploads/products/variant_claim_id_yyCiJD1631068524.png
-Squeeze 120 gr,Brown Sugar 120 gr,899320066833,https://c.alfagift.id/product/1/1_A7748960002167_20240920102914703_base.jpg
-Squeeze Bites 120 gr,Strawberry 120 gr,899320066940,https://c.alfagift.id/product/1/1_A8166180002167_20240729112116757_base.jpg
-Squeeze Bites 120 gr,Blueberry 120 gr,899320066941,https://c.alfagift.id/product/1/1_A8166190002167_20240729112107465_base.jpg
-Squeeze Bites 120 gr,Yuzu 120 gr,899320066924,https://c.alfagift.id/product/1/1_A8166200002167_20240729112202921_base.jpg
-Squeeze Bites 120 gr,Strawberry Lychee 120 gr,899320066926,https://c.alfagift.id/product/1/1_A8166210002167_20240729112212806_base.jpg
-Squeeze Bites 120 gr,Berry Blemd 120 gr,899320066927,https://c.alfagift.id/product/1/1_A8269630002167_20250326140553498_base.jpg
-Squeeze Bites 120 gr,Strawberry Manggo 120 gr,899320066930,https://c.alfagift.id/product/1/1_A8269620002167_20250326140550195_base.jpg
-Stick Yogurt 40 gr,Strawberry 40 gr,899320066891,https://c.alfagift.id/product/1/1_A8006350002167_20230922143547780_base.jpg
-Stick Yogurt 40 gr,Blueberry 40 gr,899320066892,https://c.alfagift.id/product/1/1_A8006340002167_20230922143601946_base.jpg
-Stick Yogurt 40 gr,Original 40 gr,899320066890,https://c.alfagift.id/product/1/1_A8130210002167_20240515095655362_base.jpg
-Stick Yogurt 40 gr,Mango Sticky Rice 40 gr,899320066936,https://c.alfagift.id/product/1/1_A8130200002167_20240515094931491_base.jpg
-Stick Yogurt 40 gr,Brown Sugar 40 gr,899320066946,https://c.alfagift.id/product/1/1_A8212140002167_20241025144858561_base.jpg
-Eatmilk 80 gr,Chocolate 80 gr,899320066956,https://c.alfagift.id/product/1/1_A8279130002167_20250508164840255_base.jpg
-Eatmilk 80 gr,Marie Biscuits 80 gr,899320066962,https://c.alfagift.id/product/1/1_A8279140002167_20250508164850278_base.jpg
-Eatmilk 80 gr,Chocolate Hazelnut 80 gr,899320066959,https://c.alfagift.id/product/1/1_A8279120002167_20250508164830616_base.jpg
-Kanzler Singles Sosis 60 gr,Singles Keju 60 gr,899320034631,https://cimory.com/uploads/products/variant_claim_id_9oWOvV1704246353.jpg
-Kanzler Singles Sosis 60 gr,Singles Original 60 gr,899320034831,https://cimory.com/uploads/products/variant_claim_id_mVfetA1704246621.jpg
-Kanzler Singles Sosis 60 gr,Singles Mini 60 gr,899320034731,https://cimory.com/uploads/products/meat_0027_KS-New-Packaging-Mini.jpg
-Kanzler Singles Sosis 60 gr,Singles Hot 60 gr,899320034571,https://cimory.com/uploads/products/variant_claim_id_pRF1MO1704246501.jpg
-Kanzler Singles Sosis 60 gr,Singles Gochujang 60 gr,899320066824,https://cimory.com/uploads/products/variant_claim_id_AvXrnk1704245879.jpg
-Kanzler Singles Bakso 55 gr,Bakso Original 55 gr,899320066849,https://cimory.com/uploads/products/variant_claim_id_XjrEoN1704246302.jpg
-Kanzler Singles Bakso 55 gr,Bakso Keju 55 gr,899320066850,https://cimory.com/uploads/products/variant_claim_id_WLFqEW1704246268.jpg
-Kanzler Singles Bakso 55 gr,Bakso Hot 55 gr,899320066898,https://cimory.com/uploads/products/variant_claim_id_0hZtVH1704247446.jpg
-Kanzler Singles Bakso 55 gr,Bakso Gochujang 55 gr,899320000000,https://c.alfagift.id/product/1/1_A8248640002167_20250122163637397_base.jpg
-Kanzler Frozen 450 gr,Chicken Nugget Original 450 gr,899320066438,https://cimory.com/uploads/products/variant_claim_id_ysx5bt1704247772.jpg
-Kanzler Frozen 450 gr,Crispy Chicken Nugget 450 gr,899320066439,https://cimory.com/uploads/products/variant_claim_id_fOzKTa1704247715.jpg
-Kanzler Frozen 450 gr,Crispy Chicken Stick 450 gr,899320066807,https://cimory.com/uploads/products/variant_claim_id_3FUWM41704248035.jpg
-Kanzler Frozen 450 gr,Chicken Nugget Spicy 450 gr,899320066913,https://c.alfagift.id/product/1/1_A8175020002167_20240814134841794_base.jpg
-Kanzler Frozen 450 gr,Beef Cocktail 250 gr,899320066777,https://c.alfagift.id/product/1/1_A7768630002167_20220517110751999_base.jpg
-Mini Yogurt 4x65 ml,Blueberry 4x65 ml,899320066406,https://c.alfagift.id/product/1/1_A6880780001089_20250609095045752_base.jpg
-Mini Yogurt 4x65 ml,Strawberry 4x65 ml,899320066405,https://c.alfagift.id/product/1/1_A6880770001089_20250609095035175_base.jpg
-Milk 250 ml,Chocolate 250 ml,899320066613,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-250ml-02.jpg
-Milk 250 ml,Bebas Laktosa 250 ml,899320066615,https://cimory.com/uploads/products/variant_claim_id_V6sClv1701335628.jpg
-Milk 250 ml,Hazelnut 250 ml,899320066680,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-250ml-09.jpg
-Milk 250 ml,Chocomalt 250 ml,899320066689,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-250ml-11.jpg
-Milk 250 ml,Almond 250 ml,899320066683,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-250ml-12.jpg
-Milk 250 ml,Cashew 250 ml,899320066686,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-250ml-10.jpg
-Milk 250 ml,Marie Biscuits 250 ml,899320066692,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-250ml-13.jpg
-Milk 250 ml,Strawberry 250 ml,899320066621,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-250ml-03.jpg
-Milk 250 ml,Tiramisu 250 ml,899320066724,https://c.alfagift.id/product/1/1_A7806670002167_20220905132638209_base.jpg
-Milk 250 ml,Salted Caramel 250 ml,899320066721,https://cimory.com/uploads/products/variant_claim_id_Yc692r1701336911.jpg
-Milk 250 ml,Chocomint 250 ml,899320066834,https://cimory.com/uploads/products/variant_claim_id_pUIazJ1701334693.jpg
-Milk 250 ml,Peanut Butter 250 ml,899320066718,https://cimory.com/uploads/products/variant_claim_id_faxBEE1701334288.jpg
-Milk 250 ml,Matcha 250 ml,899320066620,https://c.alfagift.id/product/1/1_A8121880002167_20240405134230448_base.jpg
-Milk 125 ml,Chocolate 125 ml,899320066626,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-125ml-01.jpg
+Yogurt Drink 240 ml,Blueberry 240 ml,899320066165,https://c.alfagift.id/product/1/1_A10280005122_20240626114733650_base.jpg
+Yogurt Drink 240 ml,Strawberry 240 ml,899320066130,https://c.alfagift.id/product/1/1_A10280005120_20240626115100240_base.jpg
+Yogurt Drink 240 ml,Mixed Fruit 240 ml,899320066135,https://c.alfagift.id/product/1/1_A10280005121_20240920145736215_base.jpg
+Yogurt Drink 240 ml,Lychee 240 ml,899320066129,https://c.alfagift.id/product/1/1_A10280004368_20240920145721252_base.jpg
+Yogurt Drink 240 ml,Mixed Berry 240 ml,899320066305,https://c.alfagift.id/product/1/1_A6880790001089_20240920145758248_base.jpg
+Yogurt Drink 240 ml,Original 240 ml,899320066306,https://c.alfagift.id/product/1/1_A6880800001089_20240920145836144_base.jpg
+Yogurt Drink 240 ml,LF Strawberry Mango 240 ml,899320066500,https://c.alfagift.id/product/1/1_A7313460001001_20240626135106413_base.jpg
+Yogurt Drink 240 ml,LF Banana 240 ml,899320066499,https://c.alfagift.id/product/1/1_A7313470001001_20240626135216829_base.jpg
+Squeeze 120 gr,Original 120 gr,899320066693,https://c.alfagift.id/product/1/1_A7451330001001_20240920102555665_base.jpg
+Squeeze 120 gr,Strawberry 120 gr,899320066694,https://c.alfagift.id/product/1/1_A7451340001001_20240920102614119_base.jpg
+Squeeze 120 gr,Blueberry 120 gr,899320066695,https://c.alfagift.id/product/1/1_A7597910001001_20240920102633146_base.jpg
+Squeeze 120 gr,Mango Sticky Rice 120 gr,899320066134,https://c.alfagift.id/product/1/1_A7741890002167_20240920102531798_base.jpg
+Squeeze 120 gr,Brown Sugar 120 gr,899320066833,https://c.alfagift.id/product/1/1_A7748960002167_20240920102858672_base.jpg
+Squeeze Bites 120 gr,Strawberry 120 gr,899320066940,https://c.alfagift.id/product/1/1_A8166180002167_20240729112109018_base.jpg
+Squeeze Bites 120 gr,Blueberry 120 gr,899320066941,https://c.alfagift.id/product/1/1_A8166190002167_20240729112100727_base.jpg
+Squeeze Bites 120 gr,Yuzu 120 gr,899320066924,https://c.alfagift.id/product/1/1_A8166200002167_20240729112156870_base.jpg
+Squeeze Bites 120 gr,Strawberry Lychee 120 gr,899320066926,https://c.alfagift.id/product/1/1_A8166210002167_20240729112205127_base.jpg
+Squeeze Bites 120 gr,Berry Blemd 120 gr,899320066927,https://c.alfagift.id/product/1/1_A8269630002167_20250326140551953_base.jpg
+Squeeze Bites 120 gr,Strawberry Manggo 120 gr,899320066930,https://c.alfagift.id/product/1/1_A8269620002167_20250326140548908_base.jpg
+Stick Yogurt 40 gr,Strawberry 40 gr,899320066891,https://c.alfagift.id/product/1/1_A8006350002167_20240417100250821_base.jpg
+Stick Yogurt 40 gr,Blueberry 40 gr,899320066892,https://c.alfagift.id/product/1/1_A8006340002167_20241001094047307_base.jpg
+Stick Yogurt 40 gr,Original 40 gr,899320066890,https://c.alfagift.id/product/1/1_A8130210002167_20240515095651244_base.jpg
+Stick Yogurt 40 gr,Mango Sticky Rice 40 gr,899320066936,https://c.alfagift.id/product/1/1_A8130200002167_20240515094926824_base.jpg
+Stick Yogurt 40 gr,Brown Sugar 40 gr,899320066946,https://c.alfagift.id/product/1/1_A8212140002167_20241025144852503_base.jpg
+Eatmilk 80 gr,Chocolate 80 gr,899320066956,https://c.alfagift.id/product/1/1_A8279130002167_20250509093700498_base.jpg
+Eatmilk 80 gr,Marie Biscuits 80 gr,899320066962,https://c.alfagift.id/product/1/1_A8279140002167_20250509093710427_base.jpg
+Eatmilk 80 gr,Chocolate Hazelnut 80 gr,899320066959,https://c.alfagift.id/product/1/1_A8279120002167_20250509093650705_base.jpg
+Kanzler Singles Sosis 60 gr,Singles Keju 60 gr,899320034631,https://c.alfagift.id/product/1/1_A7538860001001_20230615132139015_base.jpg
+Kanzler Singles Sosis 60 gr,Singles Original 60 gr,899320034831,https://c.alfagift.id/product/1/1_A7538850001001_20230615132403372_base.jpg
+Kanzler Singles Sosis 60 gr,Singles Mini 60 gr,899320034731,https://c.alfagift.id/product/1/1_A7538870001001_20230615132329904_base.jpg
+Kanzler Singles Sosis 60 gr,Singles Hot 60 gr,899320034571,https://c.alfagift.id/product/1/1_A7558650001094_20230615132027699_base.jpg
+Kanzler Singles Sosis 60 gr,Singles Gochujang 60 gr,899320066824,https://c.alfagift.id/product/1/1_A7864170002167_20240903144107496_base.jpg
+Kanzler Singles Bakso 55 gr,Bakso Original 55 gr,899320066849,https://c.alfagift.id/product/1/1_A7708160002167_20240903144033718_base.jpg
+Kanzler Singles Bakso 55 gr,Bakso Keju 55 gr,899320066850,https://c.alfagift.id/product/1/1_A7708170002167_20240903144107074_base.jpg
+Kanzler Singles Bakso 55 gr,Bakso Hot 55 gr,899320066898,https://c.alfagift.id/product/1/1_A7888730002167_20240903144119063_base.jpg
+Kanzler Singles Bakso 55 gr,Bakso Gochujang 55 gr,899320000000,https://c.alfagift.id/product/1/1_A8248640002167_20250122163635628_base.jpg
+Kanzler Frozen 450 gr,Chicken Nugget Original 450 gr,899320066438,https://c.alfagift.id/product/1/1_A7768600002167_20240711141113775_base.jpg
+Kanzler Frozen 450 gr,Crispy Chicken Nugget 450 gr,899320066439,https://c.alfagift.id/product/1/1_A7768610002167_20240711141104379_base.jpg
+Kanzler Frozen 450 gr,Crispy Chicken Stick 450 gr,899320066807,https://c.alfagift.id/product/1/1_A8032770002167_20240417104547862_base.jpg
+Kanzler Frozen 450 gr,Chicken Nugget Spicy 450 gr,899320066913,https://c.alfagift.id/product/1/1_A8175020002167_20240814134832448_base.jpg
+Kanzler Frozen 450 gr,Beef Cocktail 250 gr,899320066777,https://c.alfagift.id/product/1/1_A7768630002167_20240712160216412_base.jpg
+Mini Yogurt 4x65 ml,Blueberry 4x65 ml,899320066406,https://c.alfagift.id/product/1/1_A6880780001089_20250609095043120_base.jpg
+Mini Yogurt 4x65 ml,Strawberry 4x65 ml,899320066405,https://c.alfagift.id/product/1/1_A6880770001089_20250609095032581_base.jpg
+Milk 250 ml,Chocolate 250 ml,899320066613,https://c.alfagift.id/product/1/1_A7254390001001_20240627150147084_base.jpg
+Milk 250 ml,Bebas Laktosa 250 ml,899320066615,https://c.alfagift.id/product/1/1_A7254400001001_20240627154814297_base.jpg
+Milk 250 ml,Hazelnut 250 ml,899320066680,https://c.alfagift.id/product/1/1_A7367570001139_20240627145635280_base.jpg
+Milk 250 ml,Chocomalt 250 ml,899320066689,https://c.alfagift.id/product/1/1_A7367580001139_20240627150036569_base.jpg
+Milk 250 ml,Almond 250 ml,899320066683,https://c.alfagift.id/product/1/1_A7558610001094_20240628150809728_base.jpg
+Milk 250 ml,Cashew 250 ml,899320066686,https://c.alfagift.id/product/1/1_A7558590001094_20240627145757602_base.jpg
+Milk 250 ml,Marie Biscuits 250 ml,899320066692,https://c.alfagift.id/product/1/1_A7676610001008_20240627145921534_base.jpg
+Milk 250 ml,Strawberry 250 ml,899320066621,https://c.alfagift.id/product/1/1_A7690060001014_20240627150534933_base.jpg
+Milk 250 ml,Tiramisu 250 ml,899320066724,https://c.alfagift.id/product/1/1_A7806670002167_20240627145515270_base.jpg
+Milk 250 ml,Salted Caramel 250 ml,899320066721,https://c.alfagift.id/product/1/1_A7806680002167_20240627150412631_base.jpg
+Milk 250 ml,Chocomint 250 ml,899320066834,https://c.alfagift.id/product/1/1_A7994750002167_20240417101118133_base.jpg
+Milk 250 ml,Peanut Butter 250 ml,899320066718,https://c.alfagift.id/product/1/1_A7994760002167_20240417101056029_base.jpg
+Milk 250 ml,Matcha 250 ml,899320066620,https://c.alfagift.id/product/1/1_A8121880002167_20240405134226596_base.jpg
+Milk 125 ml,Chocolate 125 ml,899320066626,https://c.alfagift.id/product/1/1_A7498250001001_20240627145007339_base.jpg
 Milk 125 ml,Strawberry 125 ml,899320066634,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-125ml-02.jpg
-Milk 750 ml,Almond 750 ml,899320066765,https://c.alfagift.id/product/1/1_A7942710002167_20250507140226800_base.jpg
-Milk 750 ml,Chocolate 750 ml,899320066373,https://c.alfagift.id/product/1/1_A8279380002167_20250509134510212_base.jpg
+Milk 750 ml,Almond 750 ml,899320066765,https://c.alfagift.id/product/1/1_A7942710002167_20250507140224214_base.jpg
+Milk 750 ml,Chocolate 750 ml,899320066373,https://c.alfagift.id/product/1/1_A8279380002167_20250509134509087_base.jpg
 `;
 
 function parseCSV(csv) {
