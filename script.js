@@ -55,6 +55,8 @@ Milk 250 ml,Salted Caramel 250 ml,899320066721,https://c.alfagift.id/product/1/1
 Milk 250 ml,Chocomint 250 ml,899320066834,https://c.alfagift.id/product/1/1_A7994750002167_20240417101118133_base.jpg
 Milk 250 ml,Peanut Butter 250 ml,899320066718,https://c.alfagift.id/product/1/1_A7994760002167_20240417101056029_base.jpg
 Milk 250 ml,Matcha 250 ml,899320066620,https://c.alfagift.id/product/1/1_A8121880002167_20240405134226596_base.jpg
+Milk Tea 250 ml,Milk Tea 250,8993200669776,https://c.alfagift.id/product/1/1_A8297740002167_20250704141348843_base.jpg
+Milk Tea 250 ml,Thai Tea 250 ml,8993200669769,https://c.alfagift.id/product/1/1_A8297750002167_20250704141357338_base.jpg
 Milk 125 ml,Chocolate 125 ml,899320066626,https://c.alfagift.id/product/1/1_A7498250001001_20240627145007339_base.jpg
 Milk 125 ml,Strawberry 125 ml,899320066634,https://cimory.com/uploads/products/Preview---Claim-Products-(Indonesia)-UHT-125ml-02.jpg
 Milk 750 ml,Almond 750 ml,899320066765,https://c.alfagift.id/product/1/1_A7942710002167_20250507140224214_base.jpg
