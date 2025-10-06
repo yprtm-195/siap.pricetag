@@ -2,11 +2,13 @@ const csvData = `Kategori,Produk,Barcode,Gambar
 Yogurt Drink 240 ml,Blueberry 240 ml,899320066165,https://c.alfagift.id/product/1/1_A10280005122_20240626114733650_base.jpg
 Yogurt Drink 240 ml,Strawberry 240 ml,899320066130,https://c.alfagift.id/product/1/1_A10280005120_20240626115100240_base.jpg
 Yogurt Drink 240 ml,Mixed Fruit 240 ml,899320066135,https://c.alfagift.id/product/1/1_A10280005121_20240920145736215_base.jpg
-Yogurt Drink 240 ml,Lychee 240 ml,899320066129,https://c.alfagift.id/product/1/1_A10280004368_20240920145721252_base.jpg
 Yogurt Drink 240 ml,Mixed Berry 240 ml,899320066305,https://c.alfagift.id/product/1/1_A6880790001089_20240920145758248_base.jpg
 Yogurt Drink 240 ml,Original 240 ml,899320066306,https://c.alfagift.id/product/1/1_A6880800001089_20240920145836144_base.jpg
-Yogurt Drink 240 ml,LF Strawberry Mango 240 ml,899320066500,https://c.alfagift.id/product/1/1_A7313460001001_20240626135106413_base.jpg
-Yogurt Drink 240 ml,LF Banana 240 ml,899320066499,https://c.alfagift.id/product/1/1_A7313470001001_20240626135216829_base.jpg
+Yogurt Drink 240 ml,LF Strawberry Mango 240 ml,899320066500,https://c.alfagift.id/product/1/1_A7313460001001_20250917102535014_base.jpg
+Yogurt Drink 240 ml,LF Tropical Fruits 240 ml,,https://c.alfagift.id/product/1/1_A7086500001154_20250917102402100_base.jpg
+Yogurt Drink 240 ml,LF Blueberry 240 ml,,https://c.alfagift.id/product/1/1_A8312210002167_20250910150315945_base.jpg
+Yogurt Drink 240 ml,LF Stroberi 240 ml,899320066499,https://c.alfagift.id/product/1/1_A7313470001001_20250918115313783_base.jpg
+Yogurt Drink 240 ml,LF Mangga 240 ml,,https://c.alfagift.id/product/1/1_A7714420002167_20240626110956781_base.jpg
 Squeeze 120 gr,Original 120 gr,899320066693,https://c.alfagift.id/product/1/1_A7451330001001_20240920102555665_base.jpg
 Squeeze 120 gr,Strawberry 120 gr,899320066694,https://c.alfagift.id/product/1/1_A7451340001001_20240920102614119_base.jpg
 Squeeze 120 gr,Blueberry 120 gr,899320066695,https://c.alfagift.id/product/1/1_A7597910001001_20240920102633146_base.jpg
@@ -51,9 +53,7 @@ Milk 250 ml,Cashew 250 ml,899320066686,https://c.alfagift.id/product/1/1_A755859
 Milk 250 ml,Marie Biscuits 250 ml,899320066692,https://c.alfagift.id/product/1/1_A7676610001008_20240627145921534_base.jpg
 Milk 250 ml,Strawberry 250 ml,899320066621,https://c.alfagift.id/product/1/1_A7690060001014_20240627150534933_base.jpg
 Milk 250 ml,Tiramisu 250 ml,899320066724,https://c.alfagift.id/product/1/1_A7806670002167_20240627145515270_base.jpg
-Milk 250 ml,Salted Caramel 250 ml,899320066721,https://c.alfagift.id/product/1/1_A7806680002167_20240627150412631_base.jpg
 Milk 250 ml,Chocomint 250 ml,899320066834,https://c.alfagift.id/product/1/1_A7994750002167_20240417101118133_base.jpg
-Milk 250 ml,Peanut Butter 250 ml,899320066718,https://c.alfagift.id/product/1/1_A7994760002167_20240417101056029_base.jpg
 Milk 250 ml,Matcha 250 ml,899320066620,https://c.alfagift.id/product/1/1_A8121880002167_20240405134226596_base.jpg
 Milk Tea 250 ml,Milk Tea 250,8993200669776,https://c.alfagift.id/product/1/1_A8297740002167_20250704141348843_base.jpg
 Milk Tea 250 ml,Thai Tea 250 ml,8993200669769,https://c.alfagift.id/product/1/1_A8297750002167_20250704141357338_base.jpg
@@ -818,3 +818,4 @@ loadSelectedProducts();
 preventAccidentalRefresh();
 hideAddressBar(); // Tambahkan inisialisasi hide address bar
 handleBackButton(); // Tambahkan inisialisasi handle back button
+
