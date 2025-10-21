@@ -6,7 +6,7 @@ Yogurt Drink 240 ml,Mixed Berry 240 ml,899320066305,https://c.alfagift.id/produc
 Yogurt Drink 240 ml,Original 240 ml,899320066306,https://c.alfagift.id/product/1/1_A6880800001089_20240920145836144_base.jpg
 Yogurt Drink 240 ml,LF Strawberry Mango 240 ml,899320066500,https://c.alfagift.id/product/1/1_A7313460001001_20250917102535014_base.jpg
 Yogurt Drink 240 ml,LF Tropical Fruits 240 ml,,https://c.alfagift.id/product/1/1_A7086500001154_20250917102402100_base.jpg
-Yogurt Drink 240 ml,LF Blueberry 240 ml,,https://c.alfagift.id/product/1/1_A8312210002167_20250910150315945_base.jpg
+Yogurt Drink 240 ml,LF Blueberry 240 ml,899320066501,https://c.alfagift.id/product/1/1_A8312210002167_20250910150315945_base.jpg
 Yogurt Drink 240 ml,LF Stroberi 240 ml,899320066499,https://c.alfagift.id/product/1/1_A7313470001001_20250918115313783_base.jpg
 Yogurt Drink 240 ml,LF Mangga 240 ml,899320066500,https://c.alfagift.id/product/1/1_A7714420002167_20240626110956781_base.jpg
 Squeeze 120 gr,Original 120 gr,899320066693,https://c.alfagift.id/product/1/1_A7451330001001_20240920102555665_base.jpg
@@ -818,5 +818,6 @@ loadSelectedProducts();
 preventAccidentalRefresh();
 hideAddressBar(); // Tambahkan inisialisasi hide address bar
 handleBackButton(); // Tambahkan inisialisasi handle back button
+
 
 
