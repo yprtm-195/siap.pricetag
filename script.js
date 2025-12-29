@@ -29,6 +29,7 @@ Stick Yogurt 40 gr,Anggur Kyoho 40 gr,899320067030,https://c.alfagift.id/product
 Eatmilk 80 gr,Chocolate 80 gr,899320066956,https://c.alfagift.id/product/1/1_A8279130002167_20250509093700498_base.jpg
 Eatmilk 80 gr,Marie Biscuits 80 gr,899320066962,https://c.alfagift.id/product/1/1_A8279140002167_20250509093710427_base.jpg
 Eatmilk 80 gr,Chocolate Hazelnut 80 gr,899320066959,https://c.alfagift.id/product/1/1_A8279120002167_20250509093650705_base.jpg
+Eatmilk 80 gr,Cimory Eat Milk Puding Susu Rasa Matcha 80 g,,https://c.alfagift.id/product/1/1_A8337290002167_20251223101100575_base.jpg
 Kanzler Singles Sosis 60 gr,Singles Keju 60 gr,899320034631,https://c.alfagift.id/product/1/1_A7538860001001_20230615132139015_base.jpg
 Kanzler Singles Sosis 60 gr,Singles Original 60 gr,899320034831,https://c.alfagift.id/product/1/1_A7538850001001_20230615132403372_base.jpg
 Kanzler Singles Sosis 60 gr,Singles Mini 60 gr,899320034731,https://c.alfagift.id/product/1/1_A7538870001001_20230615132329904_base.jpg
@@ -55,9 +56,13 @@ Milk 250 ml,Marie Biscuits 250 ml,899320066692,https://c.alfagift.id/product/1/1
 Milk 250 ml,Strawberry 250 ml,899320066621,https://c.alfagift.id/product/1/1_A7690060001014_20240627150534933_base.jpg
 Milk 250 ml,Tiramisu 250 ml,899320066724,https://c.alfagift.id/product/1/1_A7806670002167_20240627145515270_base.jpg
 Milk 250 ml,Chocomint 250 ml,899320066834,https://c.alfagift.id/product/1/1_A7994750002167_20240417101118133_base.jpg
+Milk 250 ml No Add Sugar,Cimory Fresh Milk Uht No Added Sugar Matcha 225ml,899320067052,https://cdn-klik.klikindomaret.com/klik-catalog/product/20140793_1.jpg
+Milk 250 ml No Add Sugar,Cimory Fresh Milk Uht No Added Sugar Marie Regal 225ml,899320067053,https://cdn-klik.klikindomaret.com/klik-catalog/product/20140794_1.jpg
+Milk 250 ml No Add Sugar,Cimory Fresh Milk Uht No Added Sugar Chocolate 225ml,899320067049,https://cdn-klik.klikindomaret.com/klik-catalog/product/20140795_1.jpg
+Milk 250 ml No Add Sugar,Cimory Fresh Milk Uht No Added Sugar Almond 225ml,899320067050,https://cdn-klik.klikindomaret.com/klik-catalog/product/20140794_1.jpg
 Milk 250 ml,Matcha 250 ml,899320066620,https://c.alfagift.id/product/1/1_A8121880002167_20240405134226596_base.jpg
-Milk Tea 250 ml,Milk Tea 250,8993200669776,https://c.alfagift.id/product/1/1_A8297750002167_20250704141355914_base.jpg
-Milk Tea 250 ml,Thai Tea 250 ml,8993200669769,https://c.alfagift.id/product/1/1_A8297750002167_20250704141357338_base.jpg
+Milk Tea 250 ml,Milk Tea 250,8993200669776,https://c.alfagift.id/product/1/1_A8297740002167_20250704141347626_base.jpg
+Milk Tea 250 ml,Thai Tea 250 ml,8993200669769,https://c.alfagift.id/product/1/1_A8297750002167_20250704141355914_base.jpg
 Milk 125 ml,Chocolate 125 ml,899320066626,https://c.alfagift.id/product/1/1_A7498250001001_20240627145007339_base.jpg
 Milk 750 ml,Almond 750 ml,899320066765,https://c.alfagift.id/product/1/1_A7942710002167_20250507140224214_base.jpg
 Milk 750 ml,Chocolate 750 ml,899320066373,https://c.alfagift.id/product/1/1_A8279380002167_20250509134509087_base.jpg
@@ -818,6 +823,7 @@ loadSelectedProducts();
 preventAccidentalRefresh();
 hideAddressBar(); // Tambahkan inisialisasi hide address bar
 handleBackButton(); // Tambahkan inisialisasi handle back button
+
 
 
 
