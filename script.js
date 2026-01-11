@@ -29,7 +29,7 @@ Stick Yogurt 40 gr,Anggur Kyoho 40 gr,899320067030,https://c.alfagift.id/product
 Eatmilk 80 gr,Chocolate 80 gr,899320066956,https://c.alfagift.id/product/1/1_A8279130002167_20250509093700498_base.jpg
 Eatmilk 80 gr,Marie Biscuits 80 gr,899320066962,https://c.alfagift.id/product/1/1_A8279140002167_20250509093710427_base.jpg
 Eatmilk 80 gr,Chocolate Hazelnut 80 gr,899320066959,https://c.alfagift.id/product/1/1_A8279120002167_20250509093650705_base.jpg
-Eatmilk 80 gr,Cimory Eat Milk Puding Susu Rasa Matcha 80 g,,https://c.alfagift.id/product/1/1_A8337290002167_20251223101100575_base.jpg
+Eatmilk 80 gr,Cimory Eat Milk Puding Susu Rasa Matcha 80 g,899320067063,https://c.alfagift.id/product/1/1_A8337290002167_20251223101100575_base.jpg
 Kanzler Singles Sosis 60 gr,Singles Keju 60 gr,899320034631,https://c.alfagift.id/product/1/1_A7538860001001_20230615132139015_base.jpg
 Kanzler Singles Sosis 60 gr,Singles Original 60 gr,899320034831,https://c.alfagift.id/product/1/1_A7538850001001_20230615132403372_base.jpg
 Kanzler Singles Sosis 60 gr,Singles Mini 60 gr,899320034731,https://c.alfagift.id/product/1/1_A7538870001001_20230615132329904_base.jpg
@@ -823,6 +823,7 @@ loadSelectedProducts();
 preventAccidentalRefresh();
 hideAddressBar(); // Tambahkan inisialisasi hide address bar
 handleBackButton(); // Tambahkan inisialisasi handle back button
+
 
 
 
