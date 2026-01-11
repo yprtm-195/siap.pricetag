@@ -56,10 +56,10 @@ Milk 250 ml,Marie Biscuits 250 ml,899320066692,https://c.alfagift.id/product/1/1
 Milk 250 ml,Strawberry 250 ml,899320066621,https://c.alfagift.id/product/1/1_A7690060001014_20240627150534933_base.jpg
 Milk 250 ml,Tiramisu 250 ml,899320066724,https://c.alfagift.id/product/1/1_A7806670002167_20240627145515270_base.jpg
 Milk 250 ml,Chocomint 250 ml,899320066834,https://c.alfagift.id/product/1/1_A7994750002167_20240417101118133_base.jpg
-Milk 250 ml No Add Sugar,Cimory Fresh Milk Uht No Added Sugar Matcha 225ml,899320067052,https://c.alfagift.id/product/1/1_A8344480002167_20260108143632407_base.jpg
-Milk 250 ml No Add Sugar,Cimory Fresh Milk Uht No Added Sugar Marie Regal 225ml,899320067053,https://c.alfagift.id/product/1/1_A8343290002167_20260108144336932_base.jpg
-Milk 250 ml No Add Sugar,Cimory Fresh Milk Uht No Added Sugar Chocolate 225ml,899320067049,https://c.alfagift.id/product/1/1_A8343270002167_20260108143236211_base.jpg
-Milk 250 ml No Add Sugar,Cimory Fresh Milk Uht No Added Sugar Almond 225ml,899320067050,https://c.alfagift.id/product/1/1_A8343280002167_20260108143621232_base.jpg
+Milk 250 ml No Add Sugar 250,Matcha 225ml,899320067052,https://c.alfagift.id/product/1/1_A8344480002167_20260108143632407_base.jpg
+Milk 250 ml No Add Sugar,Marie Regal 225ml,899320067053,https://c.alfagift.id/product/1/1_A8343290002167_20260108144336932_base.jpg
+Milk 250 ml No Add Sugar,Chocolate 225ml,899320067049,https://c.alfagift.id/product/1/1_A8343270002167_20260108143236211_base.jpg
+Milk 250 ml No Add Sugar,Almond 225ml,899320067050,https://c.alfagift.id/product/1/1_A8343280002167_20260108143621232_base.jpg
 Milk 250 ml,Matcha 250 ml,899320066620,https://c.alfagift.id/product/1/1_A8121880002167_20240405134226596_base.jpg
 Milk Tea 250 ml,Milk Tea 250,8993200669776,https://c.alfagift.id/product/1/1_A8297740002167_20250704141347626_base.jpg
 Milk Tea 250 ml,Thai Tea 250 ml,8993200669769,https://c.alfagift.id/product/1/1_A8297750002167_20250704141355914_base.jpg
@@ -823,6 +823,7 @@ loadSelectedProducts();
 preventAccidentalRefresh();
 hideAddressBar(); // Tambahkan inisialisasi hide address bar
 handleBackButton(); // Tambahkan inisialisasi handle back button
+
 
 
 
