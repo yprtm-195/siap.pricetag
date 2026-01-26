@@ -35,6 +35,7 @@ Kanzler Singles Sosis 60 gr,Singles Original 60 gr,899320034831,https://c.alfagi
 Kanzler Singles Sosis 60 gr,Singles Mini 60 gr,899320034731,https://c.alfagift.id/product/1/1_A7538870001001_20230615132329904_base.jpg
 Kanzler Singles Sosis 60 gr,Singles Hot 60 gr,899320034571,https://c.alfagift.id/product/1/1_A7558650001094_20230615132027699_base.jpg
 Kanzler Singles Sosis 60 gr,Singles Gochujang 60 gr,899320066824,https://c.alfagift.id/product/1/1_A7864170002167_20240903144107496_base.jpg
+Kanzler Singles Sosis 60 gr,Ayam Tom Yum 60 g,899320000003,https://c.alfagift.id/product/1/1_A8341930002167_20251229151403277_base.jpg
 Kanzler Singles Bakso 55 gr,Bakso Original 55 gr,899320066849,https://c.alfagift.id/product/1/1_A7708160002167_20240903144033718_base.jpg
 Kanzler Singles Bakso 55 gr,Bakso Keju 55 gr,899320066850,https://c.alfagift.id/product/1/1_A7708170002167_20240903144107074_base.jpg
 Kanzler Singles Bakso 55 gr,Bakso Hot 55 gr,899320066898,https://c.alfagift.id/product/1/1_A7888730002167_20240903144119063_base.jpg
@@ -823,6 +824,7 @@ loadSelectedProducts();
 preventAccidentalRefresh();
 hideAddressBar(); // Tambahkan inisialisasi hide address bar
 handleBackButton(); // Tambahkan inisialisasi handle back button
+
 
 
 
