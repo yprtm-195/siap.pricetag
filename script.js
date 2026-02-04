@@ -15,7 +15,7 @@ Squeeze 120 gr,Mango Sticky Rice 120 gr,899320066134,https://c.alfagift.id/produ
 Squeeze 120 gr,Brown Sugar 120 gr,899320066833,https://c.alfagift.id/product/1/1_A7748960002167_20240920102858672_base.jpg
 Squeeze Bites 120 gr,Strawberry 120 gr,899320066940,https://c.alfagift.id/product/1/1_A8166180002167_20240729112109018_base.jpg
 Squeeze Bites 120 gr,Blueberry 120 gr,899320066941,https://c.alfagift.id/product/1/1_A8166190002167_20240729112100727_base.jpg
-Squeeze Bites 120 gr,Yuzu 120 gr,899320066924,https://c.alfagift.id/product/1/1_A8166200002167_20240729112156870_base.jpg
+Squeeze Bites 120 gr,Kurma 120 gr,899320066924,https://c.alfagift.id/product/1/1_A8166200002167_20240729112156870_base.jpg
 Squeeze Bites 120 gr,Strawberry Lychee 120 gr,899320066926,https://c.alfagift.id/product/1/1_A8166210002167_20240729112205127_base.jpg
 Squeeze Bites 120 gr,Berry Blemd 120 gr,899320066927,https://c.alfagift.id/product/1/1_A8269630002167_20250326140551953_base.jpg
 Squeeze Bites 120 gr,Strawberry Manggo 120 gr,899320066930,https://c.alfagift.id/product/1/1_A8269620002167_20250326140548908_base.jpg
@@ -824,6 +824,7 @@ loadSelectedProducts();
 preventAccidentalRefresh();
 hideAddressBar(); // Tambahkan inisialisasi hide address bar
 handleBackButton(); // Tambahkan inisialisasi handle back button
+
 
 
 
